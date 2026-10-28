@@ -323,12 +323,17 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .dockrow { display: flex; gap: 10px; max-width: 560px; margin: 0 auto; }
 .dockrow .go { width: auto; max-width: none; margin: 0; flex: 1; }
 .dockrow .go.alt { flex: 0 0 34%; background: var(--panel); color: var(--fg); border: 1px solid var(--line); font-weight: 500; letter-spacing: .04em; }
-.stage.shoot { padding: 0; background: #000; }
+.stage.shoot { padding: 0; background: var(--stage); }
+.stage[data-bg="white"] { --stage: #ffffff; --stage-fg: #4a4d5c; --stage-line: #d5d8e4; }
+.stage[data-bg="white"] .phone:not([data-frame="none"]) { box-shadow: inset 0 0 0 1.5px var(--fl), inset 0 0 0 5px #050506, 0 14px 40px rgba(0,0,0,.28); }
+.stage[data-bg="white"] .phone[data-frame="none"] { box-shadow: 0 14px 40px rgba(0,0,0,.22); }
+.shootx { position: absolute; right: calc(4px + env(safe-area-inset-right, 0px)); bottom: calc(4px + env(safe-area-inset-bottom, 0px)); width: 26px; height: 26px; border-radius: 50%; z-index: 62; display: none; place-items: center; font: inherit; font-size: 13px; line-height: 1; padding: 0; color: var(--stage-fg); background: transparent; border: 1px solid var(--stage-line); opacity: .65; cursor: pointer; }
+.stage.shoot .shootx { display: grid; }
 .stage.shoot .sbar { display: none; }
-.stage.shoot .phone { width: 360px; height: 780px; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.stage.shoot .screen { border-radius: 0; }
-.stage.shoot .sbtn, .stage.shoot .edge { display: none; }
-.shoothot { position: absolute; top: 0; left: 0; right: 0; height: 30px; z-index: 60; display: none; }
+.stage.shoot .phone[data-frame="none"] { width: 360px; height: 780px; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.stage.shoot .phone[data-frame="none"] .screen { border-radius: 0; }
+.stage.shoot .phone[data-frame="none"] .edge { display: none; }
+.shoothot { position: absolute; top: 0; left: 0; right: 0; height: 44px; z-index: 60; display: none; }
 .stage.shoot .shoothot { display: block; }
 .shootpill { position: absolute; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 61; font: inherit; font-size: .86rem; padding: 8px 18px; border-radius: 999px; border: 0; background: rgba(255,255,255,.92); color: #111; cursor: pointer; }
 .mch { font-size: 34px; font-weight: 700; color: #ff3b30; margin: 6px 16px 4px; }
@@ -507,6 +512,7 @@ body { margin: 0; }
 <div class="stage" id="stage" hidden>
   <div class="shoothot" id="shoothot"></div>
   <button class="shootpill" id="shootpill" type="button" hidden>撮影を終える</button>
+  <button class="shootx" id="shootx" type="button" aria-label="撮影を終える">✕</button>
   <div class="sbar"><span id="who"></span><button class="btn" id="close" type="button">閉じる</button></div>
   <div class="fit" id="fit">
     <div class="phone" id="phone">
@@ -727,6 +733,7 @@ body { margin: 0; }
     if (raw) S = Object.assign(TPL.blank(), JSON.parse(raw));
   } catch (e) { S = null; }
   if (!S) S = TPL.horror();
+  try { if (!localStorage.getItem('peekphone.m1')) { if (S.call) S.call.on = true; localStorage.setItem('peekphone.m1', '1'); } } catch (e) {}
   var saveT = null;
   function save() {
     clearTimeout(saveT);
@@ -895,6 +902,7 @@ body { margin: 0; }
         '<div class="f"><label for="f-battery"><span>電池残量</span><span id="bv">' + S.battery + '%</span></label><input type="range" id="f-battery" data-b="battery" data-num="1" min="1" max="100" value="' + S.battery + '"></div>' +
         '<div class="f"><span class="lab">壁紙（ロック画面とホーム画面で共通）</span><div class="swr">' + WALLS.map(function (w, i) { return '<button type="button" class="sw" data-wall="' + i + '" aria-label="' + w[0] + '" aria-pressed="' + (!S.wallSrc && S.wallCss === w[1]) + '" style="background:' + w[1] + '"></button>'; }).join('') + '</div><div class="two"><label class="file"><input type="file" id="f-wall" accept="image/*">' + (S.wallSrc ? '別の画像に変える' : '自分の画像を選ぶ') + '</label>' + (S.wallSrc ? '<button class="btn line" type="button" data-wallreset="1">画像を外す</button>' : '<span></span>') + '</div></div>' +
         '<div class="f"><span class="lab">スマホ本体の枠</span><div class="chipr">' + [['black', '黒'], ['silver', '銀'], ['blue', '青'], ['none', 'なし']].map(function (x) { return '<button type="button" class="btn" data-frame="' + x[0] + '" aria-pressed="' + ((S.frame || 'black') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
+        '<div class="f"><span class="lab">スマホの外の背景（スマホを覗いている間・撮影用）</span><div class="chipr">' + [['black', '黒'], ['white', '白']].map(function (x) { return '<button type="button" class="btn" data-sbg="' + x[0] + '" aria-pressed="' + ((S.stageBg || 'black') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="f"><span class="lab">カメラ部分</span><div class="chipr">' + [['island', 'アイランド'], ['notch', 'ノッチ'], ['none', 'なし']].map(function (x) { return '<button type="button" class="btn" data-cut="' + x[0] + '" aria-pressed="' + ((S.cut || 'island') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="f"><span class="lab">ロック画面の通知の色</span><div class="chipr"><button type="button" class="btn" data-nf="light" aria-pressed="' + (S.nfStyle !== 'dark') + '">白</button><button type="button" class="btn" data-nf="dark" aria-pressed="' + (S.nfStyle === 'dark') + '">黒</button></div></div>' +
         '<label class="chk" for="f-sound"><input type="checkbox" id="f-sound" data-b="sound"' + (S.sound !== false ? ' checked' : '') + '>音を鳴らす（通知の音・着信音）</label>' +
@@ -902,7 +910,8 @@ body { margin: 0; }
         '<div class="f"><span class="lab">着信音（着信画面が出ている間、くり返し鳴ります）</span><div class="icorow"><label class="file"><input type="file" id="f-snd-r" accept="audio/*">' + (USND.r ? '別の音を選ぶ' : '着信音を選ぶ') + '</label>' + (USND.r ? '<button class="btn line" type="button" data-snd="tr">聴いてみる</button><button class="btn line" type="button" data-snd="rr">外す</button>' : '') + '</div><p class="hint">' + (USND.r ? '自分の着信音を使っています。' : '設定しなければ、着信音は鳴りません。') + '</p></div>' +
         '<p class="hint" id="sndmsg" role="status">音のファイルは、短いもの（約650KBまで）が使えます。端末の中にだけ保存され、送信されません。共有コードには入りません。</p>' +
         '<label class="chk" for="f-unsend"><input type="checkbox" id="f-unsend" data-b="unsend"' + (S.unsend !== false ? ' checked' : '') + '>送信取り消しを表示する（本文が「取消」の通知・行）</label>' +
-        '<p class="hint">画像は端末の中だけで使われ、送信されません。ブラウザに保存されるので、開き直しても残ります（ブラウザのデータを消すと消えます）。</p>';
+        '<p class="hint">画像は端末の中だけで使われ、送信されません。ブラウザに保存されるので、開き直しても残ります（ブラウザのデータを消すと消えます）。</p>' +
+        '<p class="hint">「撮影用」は、録画に余計なものが映らないよう、ボタンを出しません。終えるときは、右下の小さな✕を押します。画面の一番上をタップしても「撮影を終える」が出ます。</p>';
     },
     notif: function () {
       return fld('notifs', '鳴っている通知（1行に1件）', ta('notifs', 6, '母｜今日も帰ってこなかったね｜2:10') + insbar('f-notifs', 'bar')) +
@@ -1019,7 +1028,7 @@ body { margin: 0; }
   panes.addEventListener('pointerdown', function (e) { if (e.target.closest('[data-ins]')) e.preventDefault(); });
   panes.addEventListener('click', function (e) {
     var t = e.target.closest('button'); if (!t) return;
-    if (t.dataset.tpl) { var snd = S.sound, uns = S.unsend, cbg = S.chatBg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.sound = snd; S.unsend = uns; S.chatBg = cbg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
+    if (t.dataset.tpl) { var snd = S.sound, uns = S.unsend, cbg = S.chatBg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut, sbg = S.stageBg; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.stageBg = sbg; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.sound = snd; S.unsend = uns; S.chatBg = cbg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
     else if (t.dataset.calliconrm) { if (S.call) delete S.call.icon; renderPane(); }
     else if (t.dataset.addapp) {
       S.apps = S.apps || []; if (S.apps.length < 12) S.apps.push({ label: '', badge: '' }); renderPane(); save();
@@ -1046,6 +1055,7 @@ body { margin: 0; }
       else { USND[sk === 'rn' ? 'n' : 'r'] = null; saveSnd(); renderPane(); sndMsg('もとに戻しました。'); }
     }
     else if (t.dataset.frame) { S.frame = t.dataset.frame; applyFrame(); renderPane(); }
+    else if (t.dataset.sbg) { S.stageBg = t.dataset.sbg; renderPane(); }
     else if (t.dataset.cut) { S.cut = t.dataset.cut; applyFrame(); renderPane(); }
     else if (t.dataset.nf) { S.nfStyle = t.dataset.nf; renderPane(); save(); }
     else if (t.dataset.chatbg) { S.chatBg = +t.dataset.chatbg; renderPane(); save(); }
@@ -1647,14 +1657,15 @@ body { margin: 0; }
   function clearNT() { NT.forEach(function (x) { clearTimeout(x); }); NT = []; }
   function fit() {
     var f = $('fit');
-    var sh = $('stage').classList.contains('shoot');
-    var s = Math.min(f.clientWidth / (sh ? 360 : 376), f.clientHeight / (sh ? 780 : 796), sh ? 4 : 1.3);
+    var sh = $('stage').classList.contains('shoot') && (S.frame === 'none');
+    var vv = window.visualViewport, hh = Math.min(f.clientHeight, window.innerHeight || 9999, vv && vv.height ? vv.height : 9999), ww = Math.min(f.clientWidth, window.innerWidth || 9999);
+    var s = Math.min(ww / (sh ? 360 : 376), hh / (sh ? 780 : 796), sh ? 4 : 1.3) * 0.97;
     scale = s > 0 ? s : 1;
     phone.style.setProperty('--s', scale);
   }
   /* ---------- 着信 ---------- */
   var callT = null, callTick = null, callBz = null, callPrevDark = false;
-  var callOf = function () { return Object.assign({ on: false, sec: 5, name: '不明', iconOn: false, label: 'LINE 音声通話', calls: '' }, S.call || {}); };
+  var callOf = function () { return Object.assign({ on: true, sec: 5, name: '不明', iconOn: false, label: 'LINE 音声通話', calls: '' }, S.call || {}); };
   var PERSON = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c0-4.6 3.8-7.5 8.5-7.5s8.5 2.9 8.5 7.5z"/></svg>';
   var PHONE = '<svg viewBox="0 0 24 24"><path d="M6.5 3.5l3 .5 1 4-2 1.5a12 12 0 0 0 5.5 5.5l1.5-2 4 1 .5 3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"/></svg>';
   var MIC = '<svg viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>';
@@ -1714,6 +1725,7 @@ body { margin: 0; }
   function applyFrame() {
     var ph = $('phone');
     ph.setAttribute('data-frame', ['black', 'silver', 'blue', 'none'].indexOf(S.frame) >= 0 ? S.frame : 'black');
+    $('stage').setAttribute('data-bg', S.stageBg === 'white' ? 'white' : 'black');
     ph.setAttribute('data-cut', ['island', 'notch', 'none'].indexOf(S.cut) >= 0 ? S.cut : 'island');
   }
   function openStage(shoot) {
@@ -1726,15 +1738,16 @@ body { margin: 0; }
     paintPhone(); fit();
     clearNT(); clearCall(); callLog = []; telSeen = false; ensureAudio();
     if (S.sound !== false) notifs().forEach(function (n, i) { NT.push(setTimeout(ping, (0.8 + i * 1.5) * 1000)); });
-    if (shoot === true) showPill();
   }
   function closeStage() { clearNT(); clearCall(); clearTimeout(pillT); $('stage').classList.remove('shoot'); $('stage').hidden = true; document.body.style.overflow = ''; }
   $('go').addEventListener('click', function () { openStage(false); });
   $('go2').addEventListener('click', function () { openStage(true); });
   $('shoothot').addEventListener('click', showPill);
   $('shootpill').addEventListener('click', closeStage);
+  $('shootx').addEventListener('click', closeStage);
   $('close').addEventListener('click', closeStage);
   window.addEventListener('resize', function () { if (!$('stage').hidden) fit(); });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', function () { if (!$('stage').hidden) fit(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('stage').hidden) closeStage(); });
 
   renderTabs(); renderPane(); cnt();
