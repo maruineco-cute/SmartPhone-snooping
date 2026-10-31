@@ -65,6 +65,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .btn { font: inherit; font-size: .88rem; font-weight: 700; border: 1px solid var(--line); background: var(--field); color: var(--fg); border-radius: 12px; padding: 9px 14px; cursor: pointer; }
+.btn.big { display: block; width: 100%; font-size: 1.1rem; padding: 18px 14px; margin: 4px 0 10px; background: var(--accent); color: var(--accent-fg); border-color: transparent; letter-spacing: .06em; }
+.btn.tplb { padding: 12px 8px; }
+.btn.tplb[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: transparent; box-shadow: none; }
+.btn.tplb:active { transform: scale(.97); }
 .btn.line { background: transparent; font-weight: 500; color: var(--muted); }
 .file { display: flex; align-items: center; justify-content: center; text-align: center; cursor: pointer; border: 1px dashed var(--accent); color: var(--accent); border-radius: 12px; padding: 11px 10px; font-weight: 700; font-size: .88rem; }
 .file input { position: absolute; width: 1px; height: 1px; opacity: 0; }
@@ -418,12 +422,12 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .stg .xz-tg { background: #e5e5ea; }
 .stg .xz-tg.on { background: #34c759; }
 .xz-swv { padding-top: 120px; text-align: center; }
-.xz-swt { font-size: 84px; font-weight: 200; font-variant-numeric: tabular-nums; }
-.xz-swb { display: flex; justify-content: space-between; padding: 40px 24px 0; }
-.xz-cb { width: 84px; height: 84px; border-radius: 50%; border: 3px solid #000; font-size: 17px; color: #fff; outline: 2px solid transparent; }
+.xz-swt { font-size: 66px; font-weight: 200; font-variant-numeric: tabular-nums; }
+.xz-swb { display: flex; justify-content: space-between; width: 100%; box-sizing: border-box; padding: 40px 24px 0; text-align: center; }
+.xz-cb { display: grid; place-items: center; padding: 0; flex: none; width: 84px; height: 84px; border-radius: 50%; border: 3px solid #000; font-size: 17px; color: #fff; outline: 2px solid transparent; }
 .xz-cb.gr { background: #2c2c30; }
-.xz-cb.go { background: #0b2b14; color: #30d158; }
-.xz-cb.go.stop { background: #3a0f0d; color: #ff453a; }
+.xz-cb.xgo { background: #0b2b14; color: #30d158; }
+.xz-cb.xgo.stop { background: #3a0f0d; color: #ff453a; }
 .xz-tw { display: flex; justify-content: space-around; padding: 40px 20px 0; font-size: 18px; color: #8e8e93; }
 .xz-tw b { font-size: 46px; font-weight: 300; color: #fff; margin-right: 4px; }
 .xz-wh { text-align: center; padding: 20px 0 14px; }
@@ -601,7 +605,7 @@ body { margin: 0; }
   var TPL = {
     horror: function () {
       return {
-        owner: 'ミナト', time: '2:14', date: '10月20日(火)', battery: 9, mood: 'dark',
+        owner: 'ナマエ', time: '2:14', date: '10月20日(火)', battery: 9, mood: 'dark',
         wallCss: 'linear-gradient(170deg,#0d1016,#1b2230 62%,#2a2d38)', wallSrc: null,
         notifs: J(['母｜部屋には誰もいなかったけど｜2:10', 'バイト先｜明日のシフト変更です、確認お願いします｜1:48', '非通知｜取消｜2:13']),
         searches: J(['2:11｜部屋 誰かいる 気配 夜', '2:03｜同じ夢 何度も 毎晩', '1:52｜影 動く 壁 原因', '昨日 3:30｜呼ばれる 名前 夜中 聞こえる', '昨日 0:41｜引っ越し 事故物件 調べ方', '昨日 0:12｜鏡 さわる 冷たい', '10月18日 23:58｜眠れない 3日目', '10月18日 23:20｜窓 外 こっち 見てる']),
@@ -619,16 +623,16 @@ body { margin: 0; }
     },
     love: function () {
       return {
-        owner: 'ハルカ', time: '23:48', date: '10月20日(火)', battery: 23, mood: 'bright',
+        owner: 'ナマエ', time: '23:48', date: '10月20日(火)', battery: 23, mood: 'bright',
         wallCss: 'linear-gradient(170deg,#2b3a67,#5a4a8a 58%,#c9708b)', wallSrc: null,
-        notifs: J(['ユウキ｜また今度ゆっくり話そ｜23:42', '美咲｜で、告白するの？｜23:30']),
-        searches: J(['23:45｜既読 つけない 好き 脈あり', '23:12｜ユウキ 好きな食べ物 ばれない 聞き方', '23:02｜LINE 返信 早すぎる 重い？', '昨日 1:20｜好きな人 夢に出る 意味', '昨日 0:55｜身長178 に合う 靴 ヒール 何センチ', '昨日 0:30｜自然な 連絡先 交換 方法', '10月17日 22:10｜「また今度」 社交辞令 見分け方', '10月17日 21:44｜好きな人 彼女 いる 聞く 勇気']),
+        notifs: J(['カズマ｜また今度ゆっくり話そ｜23:42', '美咲｜で、告白するの？｜23:30']),
+        searches: J(['23:45｜既読 つけない 好き 脈あり', '23:12｜カズマ 好きな食べ物 ばれない 聞き方', '23:02｜返信 早すぎる 重い？', '昨日 1:20｜好きな人 夢に出る 意味', '昨日 0:55｜身長178 に合う 靴 ヒール 何センチ', '昨日 0:30｜自然な 連絡先 交換 方法', '10月17日 22:10｜「また今度」 社交辞令 見分け方', '10月17日 21:44｜好きな人 彼女 いる 聞く 勇気']),
         memos: [
           { title: '話しかけるネタ', date: '10月19日', body: J(['・昨日の授業の話', '・猫を飼ってるって言ってた→猫の話', '・好きなバンド（要確認）', '・天気の話は最終手段']) },
           { title: 'やってはいけない', date: '10月15日', body: J(['・3分以内に返信しない', '・「笑」を使いすぎない', '・いきなり好きって言わない', '・深夜に長文送らない（←昨日やった）']) }
         ],
         messages: [
-          { name: 'ユウキ', time: '23:42', text: J(['お疲れ！明日のレジュメ送っといた', '>ありがとう！助かる！！', 'あと、さっきの話なんだけどさ', '>うん？', 'また今度ゆっくり話そ']) },
+          { name: 'カズマ', time: '23:42', text: J(['お疲れ！明日のレジュメ送っといた', '>ありがとう！助かる！！', 'あと、さっきの話なんだけどさ', '>うん？', 'また今度ゆっくり話そ']) },
           { name: '美咲', time: '23:30', text: J(['>どうしよう、今日めっちゃ話せた', 'よかったじゃん', '>でも寝る前に長文送っちゃった', 'それは重い笑', '>だよね、消したい', 'で、告白するの？']) }
         ],
         photos: mkPhotos('bright', ['10月19日', '10月19日', '10月17日', '10月16日', '10月16日', '10月13日', '10月10日', '10月8日'], 2)
@@ -636,7 +640,7 @@ body { margin: 0; }
     },
     blank: function () {
       return {
-        owner: '', time: '9:41', date: '10月20日(火)', battery: 80, mood: 'bright',
+        owner: 'ナマエ', time: '9:41', date: '10月20日(火)', battery: 80, mood: 'bright',
         wallCss: 'linear-gradient(170deg,#2b3a67,#5a4a8a 58%,#c9708b)', wallSrc: null,
         notifs: '', searches: '', memos: [], messages: [], photos: [], apps: []
       };
@@ -661,7 +665,7 @@ body { margin: 0; }
       messages: (S.messages || []).map(function (m) { return { name: m.name, time: m.time, text: m.text }; }),
       photos: (S.photos || []).map(function (p) { return { date: p.date, del: !!p.del }; }),
       apps: (S.apps || []).map(function (a) { return { label: a.label, badge: a.badge }; }),
-      call: c, cal: S.cal || '', alarms: S.alarms || '', wx: wxOf(), folder: S.folder !== false, deco: S.deco !== false, sound: S.sound !== false, unsend: S.unsend !== false,
+      call: c, cal: S.cal || '', alarms: S.alarms || '', wx: wxOf(), folder: S.folder !== false, deco: S.deco !== false, sound: S.sound !== false, ring: S.ring !== false, unsend: S.unsend !== false,
       chatBg: S.chatBg === -1 ? -1 : (S.chatBg || 0), chatColor: S.chatColor || '', nfStyle: S.nfStyle === 'dark' ? 'dark' : 'light',
       frame: S.frame || 'black', cut: S.cut || 'island'
     };
@@ -709,9 +713,9 @@ body { margin: 0; }
       messages: arr(o.messages, 6).map(function (m) { m = m || {}; return { name: cap(m.name, 16), time: cap(m.time, 10), text: cap(m.text, 4000) }; }),
       photos: arr(o.photos, 30).map(function (p, i) { p = p || {}; return { bg: ph(i, mood), date: cap(p.date, 14), del: p.del === true }; }),
       apps: arr(o.apps, 12).map(function (a) { a = a || {}; return { label: cap(a.label, 8), badge: cap(a.badge, 3) }; }),
-      call: { on: c.on === true, sec: num(c.sec, 1, 60, 5), name: cap(c.name, 14), iconOn: c.iconOn === true, label: cap(c.label, 16), calls: cap(c.calls, 2000) },
+      call: { on: c.on === true, sec: num(c.sec, 1, 60, 5), name: cap(c.name, 14), iconOn: c.iconOn === true, label: cap(c.label, 16), calls: cap(c.calls, 2000), vib: c.vib !== false },
       cal: cap(o.cal, 2000), alarms: cap(o.alarms, 600), wx: { place: cap(w.place, 10), temp: cap(w.temp, 4), cond: cap(w.cond, 10) },
-      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, unsend: o.unsend !== false, chatBg: num(o.chatBg, -1, 3, 0), chatColor: /^#[0-9a-fA-F]{6}$/.test(o.chatColor) ? o.chatColor : '', nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
+      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, ring: o.ring !== false, unsend: o.unsend !== false, chatBg: num(o.chatBg, -1, 3, 0), chatColor: /^#[0-9a-fA-F]{6}$/.test(o.chatColor) ? o.chatColor : '', nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
       frame: ['black', 'silver', 'blue', 'none'].indexOf(o.frame) >= 0 ? o.frame : 'black', cut: ['island', 'notch', 'none'].indexOf(o.cut) >= 0 ? o.cut : 'island'
     });
   }
@@ -721,7 +725,7 @@ body { margin: 0; }
       ta.value = code; ta.hidden = false; $('sharecopy').hidden = false;
       shareMsg('コードを作りました（' + code.length + '文字）。コピーして、見せたい人に送ってください。文字だけが入っていて、画像は入っていません。');
     } else if (kind === 'copy') {
-      var ta2 = $('f-sharecode'), done = function () { shareMsg('コピーしました。LINEなどに貼り付けて送れます。'); };
+      var ta2 = $('f-sharecode'), done = function () { shareMsg('コピーしました。メッセージアプリなどに貼り付けて送れます。'); };
       var fb = function () { ta2.focus(); ta2.select(); shareMsg('自動でコピーできなかったので、コードを選択しました。長押しして「コピー」を選んでください。'); };
       try { navigator.clipboard.writeText(ta2.value).then(done, fb); } catch (e) { fb(); }
     } else if (kind === 'load') {
@@ -912,11 +916,12 @@ body { margin: 0; }
   }
   var PANES = {
     basic: function () {
-      return '<div class="f"><span class="lab">サンプルを入れる（いまの内容は置き換わります）</span><div class="chipr">' +
-        '<button class="btn" type="button" data-tpl="horror">深夜ホラー</button>' +
-        '<button class="btn" type="button" data-tpl="love">こじらせ片思い</button>' +
-        '<button class="btn line" type="button" data-tpl="blank">まっさら</button></div></div>' +
-        fld('owner', '持ち主の名前', inp('owner', 'maxlength="20" placeholder="例：ミナト"')) +
+      return '<div class="f"><span class="lab">はじめに（いまの内容は置き換わります）</span>' +
+        '<button class="btn big" type="button" data-tpl="blank">まっさらから作る</button>' +
+        '<span class="lab" style="margin-top:2px">サンプルを入れる</span><div class="two">' +
+        '<button class="btn tplb" type="button" data-tpl="horror" aria-pressed="' + (S.tpl === 'horror') + '">深夜ホラー</button>' +
+        '<button class="btn tplb" type="button" data-tpl="love" aria-pressed="' + (S.tpl === 'love') + '">こじらせ片思い</button></div></div>' +
+        fld('owner', '持ち主の名前', inp('owner', 'maxlength="20" placeholder="ナマエ"')) +
         '<div class="two">' + fld('time', '時刻', inp('time', 'maxlength="6" inputmode="numeric"')) + fld('date', '日付', inp('date', 'maxlength="14"')) + '</div>' +
         '<div class="f"><label for="f-battery"><span>電池残量</span><span id="bv">' + S.battery + '%</span></label><input type="range" id="f-battery" data-b="battery" data-num="1" min="1" max="100" value="' + S.battery + '"></div>' +
         '<div class="f"><span class="lab">壁紙（ロック画面とホーム画面で共通）</span><div class="swr">' + WALLS.map(function (w, i) { return '<button type="button" class="sw" data-wall="' + i + '" aria-label="' + w[0] + '" aria-pressed="' + (!S.wallSrc && S.wallCss === w[1]) + '" style="background:' + w[1] + '"></button>'; }).join('') + '</div><div class="two"><label class="file"><input type="file" id="f-wall" accept="image/*">' + (S.wallSrc ? '別の画像に変える' : '自分の画像を選ぶ') + '</label>' + (S.wallSrc ? '<button class="btn line" type="button" data-wallreset="1">画像を外す</button>' : '<span></span>') + '</div></div>' +
@@ -924,8 +929,9 @@ body { margin: 0; }
         '<div class="f"><span class="lab">スマホの外の背景（スマホを覗いている間・撮影用）</span><div class="chipr">' + [['black', '黒'], ['white', '白']].map(function (x) { return '<button type="button" class="btn" data-sbg="' + x[0] + '" aria-pressed="' + ((S.stageBg || 'black') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="f"><span class="lab">カメラ部分</span><div class="chipr">' + [['island', 'アイランド'], ['notch', 'ノッチ'], ['none', 'なし']].map(function (x) { return '<button type="button" class="btn" data-cut="' + x[0] + '" aria-pressed="' + ((S.cut || 'island') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="f"><span class="lab">ロック画面の通知の色</span><div class="chipr"><button type="button" class="btn" data-nf="light" aria-pressed="' + (S.nfStyle !== 'dark') + '">白</button><button type="button" class="btn" data-nf="dark" aria-pressed="' + (S.nfStyle === 'dark') + '">黒</button></div></div>' +
-        '<label class="chk" for="f-sound"><input type="checkbox" id="f-sound" data-b="sound"' + (S.sound !== false ? ' checked' : '') + '>音を鳴らす（通知の音・着信音）</label>' +
-        '<div class="f"><span class="lab">通知の音</span><div class="icorow"><label class="file"><input type="file" id="f-snd-n" accept="audio/*">' + (USND.n ? '別の音を選ぶ' : '自分の音を選ぶ') + '</label><button class="btn line" type="button" data-snd="tn">聴いてみる</button>' + (USND.n ? '<button class="btn line" type="button" data-snd="rn">もとの音に戻す</button>' : '') + '</div><p class="hint">' + (USND.n ? '自分の音を使っています。' : 'いまは標準の音（LINE風のポン）です。') + '</p></div>' +
+        '<label class="chk" for="f-sound"><input type="checkbox" id="f-sound" data-b="sound"' + (S.sound !== false ? ' checked' : '') + '>通知の音を鳴らす（ロック画面の通知）</label>' +
+        '<label class="chk" for="f-ring"><input type="checkbox" id="f-ring" data-b="ring"' + (S.ring !== false ? ' checked' : '') + '>着信音を鳴らす（下で着信音を選んだときだけ鳴ります）</label>' +
+        '<div class="f"><span class="lab">通知の音</span><div class="icorow"><label class="file"><input type="file" id="f-snd-n" accept="audio/*">' + (USND.n ? '別の音を選ぶ' : '自分の音を選ぶ') + '</label><button class="btn line" type="button" data-snd="tn">聴いてみる</button>' + (USND.n ? '<button class="btn line" type="button" data-snd="rn">もとの音に戻す</button>' : '') + '</div><p class="hint">' + (USND.n ? '自分の音を使っています。' : 'いまは標準の音（通知風のポン）です。') + '</p></div>' +
         '<div class="f"><span class="lab">着信音（着信画面が出ている間、くり返し鳴ります）</span><div class="icorow"><label class="file"><input type="file" id="f-snd-r" accept="audio/*">' + (USND.r ? '別の音を選ぶ' : '着信音を選ぶ') + '</label>' + (USND.r ? '<button class="btn line" type="button" data-snd="tr">聴いてみる</button><button class="btn line" type="button" data-snd="rr">外す</button>' : '') + '</div><p class="hint">' + (USND.r ? '自分の着信音を使っています。' : '設定しなければ、着信音は鳴りません。') + '</p></div>' +
         '<p class="hint" id="sndmsg" role="status">音のファイルは、短いもの（約650KBまで）が使えます。端末の中にだけ保存され、送信されません。共有コードには入りません。</p>' +
         '<label class="chk" for="f-unsend"><input type="checkbox" id="f-unsend" data-b="unsend"' + (S.unsend !== false ? ' checked' : '') + '>送信取り消しを表示する（本文が「取消」の通知・行）</label>' +
@@ -981,6 +987,7 @@ body { margin: 0; }
       var c = S.call;
       return '<label class="chk" for="f-call-on"><input type="checkbox" id="f-call-on" data-b="call.on"' + (c.on ? ' checked' : '') + '>ロックを解除したあと、通話の着信画面を出す</label>' +
         '<div class="f"><label for="f-call-sec"><span>出るまでの秒数（解除してから）</span><span id="csv">' + c.sec + '秒</span></label><input type="range" id="f-call-sec" data-b="call.sec" data-num="1" min="1" max="60" value="' + c.sec + '"></div>' +
+        '<label class="chk" for="f-call-vib"><input type="checkbox" id="f-call-vib" data-b="call.vib"' + (c.vib !== false ? ' checked' : '') + '>着信中、スマホが震える演出をする</label>' +
         fld('call.name', '発信者の名前', inp('call.name', 'maxlength="14" placeholder="例：不明"')) +
         fld('call.label', '名前の下に出る文字', inp('call.label', 'maxlength="16"')) +
         '<label class="chk" for="f-call-iconon"><input type="checkbox" id="f-call-iconon" data-b="call.iconOn"' + (c.iconOn ? ' checked' : '') + '>アイコンを表示する（オフだと、設定していない「不明な相手」の見た目）</label>' +
@@ -1056,7 +1063,7 @@ body { margin: 0; }
   panes.addEventListener('pointerdown', function (e) { if (e.target.closest('[data-ins]')) e.preventDefault(); });
   panes.addEventListener('click', function (e) {
     var t = e.target.closest('button'); if (!t) return;
-    if (t.dataset.tpl) { var snd = S.sound, uns = S.unsend, cbg = S.chatBg, ccol = S.chatColor, cimg = S.chatImg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut, sbg = S.stageBg; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.stageBg = sbg; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.sound = snd; S.unsend = uns; S.chatBg = cbg; S.chatColor = ccol; S.chatImg = cimg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
+    if (t.dataset.tpl) { var snd = S.sound, rng = S.ring, uns = S.unsend, cbg = S.chatBg, ccol = S.chatColor, cimg = S.chatImg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut, sbg = S.stageBg; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.stageBg = sbg; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.tpl = t.dataset.tpl; S.sound = snd; S.ring = rng; S.unsend = uns; S.chatBg = cbg; S.chatColor = ccol; S.chatImg = cimg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
     else if (t.dataset.calliconrm) { if (S.call) delete S.call.icon; renderPane(); }
     else if (t.dataset.addapp) {
       S.apps = S.apps || []; if (S.apps.length < 12) S.apps.push({ label: '', badge: '' }); renderPane(); save();
@@ -1383,9 +1390,9 @@ body { margin: 0; }
       }).join('');
     } else if (t === 2) {
       swBase = 0; swOn = false;
-      body = '<div class="xz-swv"><div class="xz-swt" id="xz-sw">00:00.00</div></div><div class="xz-swb"><button type="button" class="xz-cb gr">ラップ</button><button type="button" class="xz-cb go" data-act="sw" id="xz-swgo">開始</button></div>';
+      body = '<div class="xz-swv"><div class="xz-swt" id="xz-sw">00:00.00</div></div><div class="xz-swb"><button type="button" class="xz-cb gr">ラップ</button><button type="button" class="xz-cb xgo" data-act="sw" id="xz-swgo">開始</button></div>';
     } else {
-      body = '<h2 class="lt xz-lt" style="margin-top:30px">タイマー</h2><div class="xz-tw"><div><b>0</b>時間</div><div><b>5</b>分</div><div><b>0</b>秒</div></div><div class="xz-swb"><button type="button" class="xz-cb gr">キャンセル</button><button type="button" class="xz-cb go">開始</button></div><div class="xz-wc" style="margin-top:30px"><div class="xz-nm">タイマー終了時</div><div class="xz-sub" style="font-size:16px">電波塔</div></div>';
+      body = '<h2 class="lt xz-lt" style="margin-top:30px">タイマー</h2><div class="xz-tw"><div><b>0</b>時間</div><div><b>5</b>分</div><div><b>0</b>秒</div></div><div class="xz-swb"><button type="button" class="xz-cb gr">キャンセル</button><button type="button" class="xz-cb xgo">開始</button></div><div class="xz-wc" style="margin-top:30px"><div class="xz-nm">タイマー終了時</div><div class="xz-sub" style="font-size:16px">電波塔</div></div>';
     }
     var ic = ['<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>', '<circle cx="12" cy="13" r="7.5"/><path d="M12 9v4.5l3 2M4 5l3-2.5M20 5l-3-2.5"/>', '<circle cx="12" cy="14" r="7"/><path d="M12 14V10M9.5 2.5h5M12 2.5V7"/>', '<circle cx="12" cy="13" r="7.5"/><path d="M12 13V8.5M9.5 2.5h5M12 2.5v3"/>'];
     var nm = ['世界時計', 'アラーム', 'ストップウォッチ', 'タイマー'];
@@ -1471,7 +1478,7 @@ body { margin: 0; }
       g([r('air', '#ff9500', '機内モード', 'tg'), r('wifi', '#0a84ff', 'Wi-Fi', '未接続'), r('bt', '#0a84ff', 'Bluetooth', 'オン'), r('cell', '#34c759', 'モバイル通信', '')]) +
       g([r('bell', '#ff3b30', '通知', ''), r('spk', '#ff2d55', 'サウンドと触覚', ''), r('moon', '#5856d6', '集中モード', ''), r('hour', '#5856d6', 'スクリーンタイム', '')]) +
       g([r('gear', '#8e8e93', '一般', ''), r('sw', '#8e8e93', 'コントロールセンター', ''), r('sun', '#0a84ff', '画面表示と明るさ', ''), r('grid', '#5856d6', 'ホーム画面', ''), r('acc', '#0a84ff', 'アクセシビリティ', ''), r('pic', '#34aadc', '壁紙', '')]) +
-      g([r('siri', '#5e5ce6', 'Siri', ''), r('hand', '#0a84ff', 'プライバシーとセキュリティ', ''), r('bat', '#34c759', 'バッテリー', S.battery + '%', 'batt')]) + '<div style="height:30px"></div></div></div>', true);
+      g([r('hand', '#0a84ff', 'プライバシーとセキュリティ', ''), r('bat', '#34c759', 'バッテリー', S.battery + '%', 'batt')]) + '<div style="height:30px"></div></div></div>', true);
   }
   function vBattery() {
     var b = Math.max(1, Math.min(100, +S.battery || 50)), bars = '', i;
@@ -1630,7 +1637,7 @@ body { margin: 0; }
   lock.addEventListener('pointerup', endDrag);
   lock.addEventListener('pointercancel', function () { sy = null; lock.style.transition = ''; lock.style.transform = ''; lock.style.opacity = ''; });
 
-  var NT = [], sndEl = null;
+  var NT = [], PT = [], sndEl = null;
   var SND_NOTIFY = "data:audio/mpeg;base64,SUQzAwAAAAAAD1RDT04AAAAFAAAAKDEyKf/6MsA3nAAAAAABLgAAACAAACXAAAAEsASxAACgPJlpmqpUMAAFUIcnT6gTJkQssOLCCEVOXhV+n+XS/r6aZyn5eleJ1KcI4TklfiV0RCd92FhCNPzlMIDAwQASFk7EaTouCA6R6PMImnnJiahzIBFZAxlkUUZG0SRECEhwJgBjndkq3JJfbU5Pv7T33tjZzIzk7Z9iHtyds+3dl7//+jDAHmM/AAAAAS4AAAAgAAAlwAAABLsWTpPXbMf1SNQbTP07rLZ9PBABnpDGuIz3d3iGf728uXcjFABQDsseTT4IWFYDFFoY5ZNi/kPdqpXfmnxNypl5oh2IiV4xPlpbZ8lYibn+VcsQ7j6z0U0QxehfCYghYTyQjN6oiVQzaAQAmzgYOk4MQDjBgAtmB+J/PTXb/9ZlHP1Tcs7/+jLA1LuBgAlQ+TnDDGuJQqJquJEZcHcdzs3TH//kff3ASRs43p8gi2PAMpQ55a7XRr/buqqXRClQUBKNCB/oOJLEIEBpjnlct26h37+Xk1v8hpvDV3M2db8/93zPV3Yp117ntM2Ow4jy5jmEV6ZPnm9zLmFMlhVACkh1hAoQmsUInRcSmKEg8tps029t4saIJWu6aYhCVDJdSbio//oywO3kdoAIkQljwwhriPaErXhjCJGoqHaKXbkOQUPvALwybalNKQA0iTK1AcKIXcOgSgT8p/DhlMrVz5Llf/irkZ+V95/+R5lHL75zyrZrk50tnyftyyPDWEYDxbHUu+z/GtIKpkjWiCAAAAeGJGupDLFBcBHgG4BXZP+JCAS4NiwuMaRRJKU8riXsDVZXU96zvjFPDQiVxKeKnf/6MsA8VXgAB7glccMYxIjvhK64YxiQDrVgqrKnSKswMpbOu1tpAIiyM2gB82FEilZf8VLJhUEWIhfFDyHuuS69bq2YinjqVoLZLcR1tKHd0lS9JJBkiAiI0lnmtlkAluc5WsvgKJnQBB1yMzptqKym5r75RrVZv202l+j/S8ruzvp6Prqj6PZPQdgNDzBa6wSw5MJxMxATVYYL/rr/+jDAnYZ+AAhxEXWGjGuA6QTtOPmMkMAsvpp6iSYGOWYXDYZV0O3Fe6B/2tp5W5v9VVkcu+yVlLK3zXX+a2Ce+T5Pfjzc/O7de+hEAADeEeWR1IBBQ25D3xVD0jyAHS4tutA2VvMKdpNFGRSrROAS3YYYz3HKlGNCCL/No7/agOqbSUgQ5tbNpKkAfy4Jaflx+E/A5kycHOaNvOr/+jLAhviBgAbYJV+k6GSg+hsrfZEJbBYVfmcvmDG0hqGxdI11bmTuFc2656WJoeJZ6HS1np7cmAkQrDu7e2wAAJ8IhLOTcEJAbYuKjYAi1CCkSphdhbk7PQ1mbc2IEYoq7xnE5fy8EMng8iLzCLig5DfTCSIoCf/e6ShgAIUsVSKTqQ4F8jCkHNGcqAgxYC2EIdp5QoY1R4+n9G4S//oywP56iYAHeMtV54hLaN+JKLz4CNwc339XijEWBAVoWctuFEnWLV/y7SB//+1tkAASyV0kqla3MvEfBvZlxmKQ5HqqPxlY1S1OWcxYRgQPr+Dwsbc5Ot4w7dUhRA0SALDzV8j549y/EAdsknUoAiRAzbioCg5dERTpaBwrqDiCQ7lFbipg5S5fuxOBAkQXUomHQSjvdnLb3qOdJP/6MsCTVZKABzRFQae8RuD0iaX9h7zk+Q9nWv0CAX622NsAAATvJx0TjF7BIZmRDIVByCxAqUMWkrmBlHFIOJaCVQcoDGd5ZNrHuW4WBUV4d2ZrJAAAAUSVuwWpFADQj5c7MKthEkCPI9xTS7bKHEpa7BOSNh4dVMM8VHseivoCrskbcqAACAwhRhBBTImhaJwuHQDEEjnpifjmiaD/+jDA6+WaAAdsRy2sPebg+Qwl9YeZJIAIWcMOKM4Fw8cpYTQ7pWgh/3Q0E1+11skgAACB2TRQgMEgtsZ8gKeEmesDthWXDPuDASDNaZn5EFGNysqcLM1gEXa7aQeAABMGQOsXUMGS0T/DBab56FA+ZJRA2ukuVdrMvorgDcskbcwAADhtCnR4zNS5RiphpUMwXO2iQw8HIH6g6jL/+jLA7lKfgAcsbyOMsKkgwojk9YeM3CwLKEwUf1HZ96RJLJG3UgAEIFsdFZyoOLAAGOGwTrQxVkFHEwva5XukMOiTfWpb+JuiFt1slmAAAAPYA53wUAFSAribiPQ7wkAtEvjuj0jpLbk////////////////////////////////////////////////////////////8f/ba24AA//oywCburYAGSEcr7D0G4MaHY/GGDNwA67AmTVAinMRkKdyurM4CuJRRx/EVpuURuNpJQACBR0vMSAQRl5jIhkzFouJLRwozJK79W3GBf//////////////////////////////////////////////////////////////////////////////////////////////////+HI2Wgf/6MsCqOL6ABbBFKay8ZuCLBOTxjCSUAJSaIcEqEhAbA7xYEc/cFdSARBpTnOZZEkbbaeAIV9l7gQoCETUFiE4J0xmE4tWbdFGidNd6v///////////////////////////////////////////////////////////////////////////////////////////////xf7bJJEAABb/+jDA2IrZAAU4KyGMZMSgoAdkMZYU3Dt+O1BoeE0oWTJ6QKemKPWCUYPJdP9UElcaTcACx8HJTDYIjAFHoKTYw65yvp/x6Si7V///////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLAeJvygAm4ISWHvMSoeQRlMPwYlfhOIkkEGUr2YkpCJqRoKNhEvzKloDv/ohNW2kgBo+CJMREBFhwLNRuhcP5D///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8//oywIe8/4ANPB0dbGEiqG+E41D3lJQnEkigFmoFhwOZuGCdcCWrQwokusFT/1YJpIkADyHFlKAgJSEOLCvAY8gfDQn8q//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MMBUbf+ADMg7H2wMRuB5g+Sw/BhU///8uxpAIg29MJxG1QOE2V9xhSwC7t+mCcRIIA+n/ByXSYBeQYLNu1f////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MsAVyP+ADdQ7H2wYZuBdgqMQ/AxN//////+HI22ksqhBEMg2PkODBAgY7+9oCjKSBIaYoVixAz0ul/iJMXHvotjf////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLAd/j/gA24FR6H4MJgX4PjUPeMVP///////w5G2whbKoVAmIiBoMolIsEXQACAAABWEv////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////oywDvW/4AOGBkWjDzCaFQCo5D8CEz/////////8O1xtACLHDgcRkOk+gc1VSAOxtsAG2HCASHhI6TRT//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MMBHof+ADkQRGoex4GBLgyPQZgxN//////////8KRJBADmXRj2MwhWixNz9UCtcbAAeVVEu/oFs////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MsBA4v+ADoAbGoS8QqBGgqPQlIxM/////////////////////+AQAAAJcPymDjAAAAMw8A//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLAaVD/gA6wAxaAAAAgQYNkEDYMVf////////////////CkDYQAVsMBDUMQag5G2AALKIG6R/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////oywKTw/4AOwBEggKTAaD6CI5BmMAz//////////////////8JIAAICABD7f6USwQAAOxwpYrAn///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MMC09f+AD6wbIoCkQqgdAGKQAAAE//////////////////////////////5G///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MsD8rv+AD1ADIICAACguAiQQIRgM////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLAiJD/gA+IDyKAhEBgJgBj0CAABP//////////////////////////////0P////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////oywHIT/4AQlBEkgJhAYASAIkAAAAT////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MMAipf+AEKABLgAAACAAACXAAAAE///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MsAWhf+AEKABLgAAACADgGLAAAAE////////////////////////////////r///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLA6jb/gBDAAS4AAAAgAAAlwAAABP///////////////////////////////sPf//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////oywOo2/4AQwAEuAAAAIAAAJcAAAAT//////////////////////////////9D////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MMAj0/+AEKABLgAAACAAACKAAAAE///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////6MsDmRv+AELgDFAAAACAAACXAAAAE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+jLAuUj/gBCcARIAAAAgBAAiwAAABP///////////////////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//owwCKl/4AQoAEuAAAAIAAAJcAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//oywOo2/4AQwAEuAAAAIAAAJcAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/6MsDqNv+AEMABLgAAACAAACXAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   var SKEY = 'peekphone.snd.v1', USND = { n: null, r: null }, ringEl = null, sndSrc = '', ringSrc = '', SND_MAX = 900000;
   try { var sraw = JSON.parse(localStorage.getItem(SKEY) || '{}'); ['n', 'r'].forEach(function (k) { if (typeof sraw[k] === 'string' && /^data:audio\//.test(sraw[k])) USND[k] = sraw[k]; }); } catch (e) {}
@@ -1659,7 +1666,7 @@ body { margin: 0; }
     try { sndEl.muted = false; sndEl.currentTime = 0; var p = sndEl.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
   function ringStart() {
-    if (!ringEl || S.sound === false) return;
+    if (!ringEl || S.ring === false) return;
     try { ringEl.muted = false; ringEl.currentTime = 0; var p = ringEl.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
   function ringStop() { try { if (ringEl) { ringEl.pause(); ringEl.currentTime = 0; } } catch (e) {} }
@@ -1687,7 +1694,8 @@ body { margin: 0; }
     fr.onerror = function () { sndMsg('読み込めませんでした。'); };
     fr.readAsDataURL(f);
   }
-  function clearNT() { NT.forEach(function (x) { clearTimeout(x); }); NT = []; }
+  function clearNT() { NT.forEach(function (x) { clearTimeout(x); }); NT = []; clearPT(); }
+  function clearPT() { PT.forEach(function (x) { clearTimeout(x); }); PT = []; }
   function fit() {
     var f = $('fit');
     var sh = $('stage').classList.contains('shoot') && (S.frame === 'none');
@@ -1698,7 +1706,7 @@ body { margin: 0; }
   }
   /* ---------- 着信 ---------- */
   var callT = null, callTick = null, callBz = null, callPrevDark = false;
-  var callOf = function () { return Object.assign({ on: true, sec: 5, name: '不明', iconOn: false, label: 'LINE 音声通話', calls: '' }, S.call || {}); };
+  var callOf = function () { var o = Object.assign({ on: true, sec: 5, name: '不明', iconOn: false, label: '音声通話', calls: '', vib: true }, S.call || {}); if (o.label === 'LINE 音声通話') o.label = '音声通話'; return o; };
   var PERSON = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c0-4.6 3.8-7.5 8.5-7.5s8.5 2.9 8.5 7.5z"/></svg>';
   var PHONE = '<svg viewBox="0 0 24 24"><path d="M6.5 3.5l3 .5 1 4-2 1.5a12 12 0 0 0 5.5 5.5l1.5-2 4 1 .5 3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"/></svg>';
   var MIC = '<svg viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>';
@@ -1725,7 +1733,7 @@ body { margin: 0; }
       '<div class="cbtns"><button type="button" class="cbt" data-call="decline"><span class="cb red">' + PHONE + '</span>拒否</button>' +
       '<button type="button" class="cbt" data-call="accept"><span class="cb grn">' + PHONE + '</span>応答</button></div>';
     el.hidden = false;
-    buzz(); clearInterval(callBz); callBz = setInterval(buzz, 1500); ringStart();
+    clearPT(); clearInterval(callBz); callBz = null; if (c.vib !== false) { buzz(); callBz = setInterval(buzz, 1500); } ringStart();
   }
   var callT0 = 0;
   function callDur() { var s = Math.floor((Date.now() - callT0) / 1000); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + (s % 60)).slice(-2); }
@@ -1770,7 +1778,7 @@ body { margin: 0; }
     host.classList.remove('on'); host.innerHTML = ''; setBar(false);
     paintPhone(); fit();
     clearNT(); clearCall(); callLog = []; telSeen = false; ensureAudio();
-    if (S.sound !== false) notifs().forEach(function (n, i) { NT.push(setTimeout(ping, (0.8 + i * 1.5) * 1000)); });
+    if (S.sound !== false) notifs().forEach(function (n, i) { PT.push(setTimeout(ping, (0.8 + i * 1.5) * 1000)); });
   }
   function closeStage() { clearNT(); clearCall(); clearTimeout(pillT); $('stage').classList.remove('shoot'); $('stage').hidden = true; document.body.style.overflow = ''; }
   $('go').addEventListener('click', function () { openStage(false); });
