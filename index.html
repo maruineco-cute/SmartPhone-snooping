@@ -47,6 +47,7 @@ body {
 header { display: flex; align-items: center; gap: 10px; }
 h1 { font-family: var(--font-disp); font-weight: 400; font-size: 1.75rem; margin: 0; letter-spacing: .02em; text-wrap: balance; }
 .cnt { min-width: 24px; height: 24px; padding: 0 10px; border-radius: 12px; background: var(--badge); color: #fff; font-family: var(--font-body, inherit); white-space: nowrap; font-size: .78rem; display: inline-grid; place-items: center; }
+.legal { margin: 22px 0 110px; color: var(--muted); font-size: .74rem; line-height: 1.6; text-wrap: pretty; }
 .sub { margin: 4px 0 14px; color: var(--muted); font-size: .85rem; }
 .tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
@@ -71,10 +72,21 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .hint { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.65; }
 .chipr { display: flex; flex-wrap: wrap; gap: 8px; }
 .card { border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-.pgd { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-.pc { border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.pc .th { aspect-ratio: 1; border-radius: 10px; background-size: cover; overflow: hidden; }
-.pc .th img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pgd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.pc { border: 1px solid var(--line); border-radius: 12px; padding: 5px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.pc .pth { position: relative; aspect-ratio: 1; border-radius: 8px; background-size: cover; overflow: hidden; }
+.pno { position: absolute; left: 4px; top: 4px; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: rgba(0,0,0,.68); color: #fff; font-family: var(--font-mono); font-size: .72rem; display: grid; place-items: center; }
+.pc input[type="text"] { padding: 5px 6px; font-size: .74rem; border-radius: 8px; min-width: 0; }
+.pc .btn { padding: 5px 2px; font-size: .68rem; border-radius: 8px; }
+.prow { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.psec { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 14px 0 8px; padding-top: 12px; border-top: 2px solid var(--line); }
+.psec:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.psec b { font-size: .95rem; }
+.psec span { font-size: .72rem; color: var(--muted); }
+.padd { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.padd .file, .padd .btn { padding: 9px 4px; font-size: .8rem; }
+.pempty { font-size: .8rem; color: var(--muted); padding: 6px 2px 2px; }
+.pc .pth img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .chk { display: flex; align-items: flex-start; gap: 6px; font-size: .78rem; color: var(--muted); line-height: 1.4; }
 .chk input { accent-color: var(--accent); margin: 2px 0 0; flex: none; }
 .dockbar {
@@ -89,6 +101,8 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .ins .btn { padding: 6px 12px; font-size: .82rem; }
 .swr { display: flex; flex-wrap: wrap; gap: 10px; }
 .sw { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--line); padding: 0; cursor: pointer; }
+.cpick { position: relative; display: block; overflow: hidden; }
+.cpick input { position: absolute; inset: -8px; width: 60px; height: 60px; opacity: 0; cursor: pointer; }
 .sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--accent); }
 .icorow { display: flex; align-items: center; gap: 10px; }
 .icp { flex: 0 0 48px; width: 48px; height: 48px; border-radius: 50%; background: var(--field); border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; font-weight: 700; color: var(--muted); }
@@ -155,6 +169,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .nf .ni svg { width: 22px; height: 22px; }
 .nf .ni { overflow: hidden; }
 .nf .ni img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nf .ni.im { background: #fff; }
 .nf .nbd { min-width: 0; flex: 1; }
 .nf .nh { display: flex; justify-content: space-between; gap: 8px; font-size: 15px; font-weight: 600; line-height: 20px; margin-bottom: 2px; }
 .nf .nh em { font-style: normal; font-weight: 400; font-size: 13px; opacity: .65; flex: none; }
@@ -176,7 +191,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .ic.pop { animation: pop .3s; }
 @keyframes pop { 40% { transform: scale(.88); } }
 .al { font-size: 11.5px; text-shadow: 0 1px 3px rgba(0,0,0,.5); white-space: nowrap; max-width: 70px; overflow: hidden; text-overflow: ellipsis; }
-.ic img.ci { width: 100%; height: 100%; border-radius: 14px; object-fit: cover; display: block; }
+.ic img.ci { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 14px; object-fit: cover; display: block; }
 .ic .ch { font-size: 28px; font-weight: 600; color: #fff; line-height: 1; }
 .bdg { position: absolute; top: -7px; right: -7px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: #ff3b30; color: #fff; font-size: 13px; font-weight: 600; display: grid; place-items: center; }
 .cal { display: grid; place-items: center; color: #000; line-height: 1; gap: 1px; }
@@ -200,7 +215,8 @@ input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px
 .row::after { content: ""; position: absolute; left: 16px; right: 0; bottom: 0; height: 1px; background: #e6e6ea; }
 .avt { flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 600; font-size: 19px; }
 .avt { overflow: hidden; }
-.avt img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avt { position: relative; }
+.avt img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .mb { flex: 1; min-width: 0; }
 .mt { display: flex; justify-content: space-between; gap: 8px; }
 .mt b { font-size: 16px; font-weight: 600; }
@@ -506,6 +522,7 @@ body { margin: 0; }
   <p class="sub">創作キャラのスマホを、こっそり覗いている場面を作ります。</p>
   <div class="tabs" id="tabs" role="tablist"></div>
   <section class="pane" id="panes" role="tabpanel"></section>
+  <p class="legal">ご利用上の注意：このツールで作った内容・画像・共有コードの扱いで起きたトラブルは、すべて使った本人の責任です。他の人の権利（肖像・著作権・プライバシーなど）を侵害しないよう、ご自身で確認して使ってください。</p>
 </div>
 <div class="dockbar"><div class="dockrow"><button class="go" id="go" type="button">スマホを覗く</button><button class="go alt" id="go2" type="button">撮影用</button></div></div>
 
@@ -645,7 +662,7 @@ body { margin: 0; }
       photos: (S.photos || []).map(function (p) { return { date: p.date, del: !!p.del }; }),
       apps: (S.apps || []).map(function (a) { return { label: a.label, badge: a.badge }; }),
       call: c, cal: S.cal || '', alarms: S.alarms || '', wx: wxOf(), folder: S.folder !== false, deco: S.deco !== false, sound: S.sound !== false, unsend: S.unsend !== false,
-      chatBg: S.chatBg || 0, nfStyle: S.nfStyle === 'dark' ? 'dark' : 'light',
+      chatBg: S.chatBg === -1 ? -1 : (S.chatBg || 0), chatColor: S.chatColor || '', nfStyle: S.nfStyle === 'dark' ? 'dark' : 'light',
       frame: S.frame || 'black', cut: S.cut || 'island'
     };
   }
@@ -694,7 +711,7 @@ body { margin: 0; }
       apps: arr(o.apps, 12).map(function (a) { a = a || {}; return { label: cap(a.label, 8), badge: cap(a.badge, 3) }; }),
       call: { on: c.on === true, sec: num(c.sec, 1, 60, 5), name: cap(c.name, 14), iconOn: c.iconOn === true, label: cap(c.label, 16), calls: cap(c.calls, 2000) },
       cal: cap(o.cal, 2000), alarms: cap(o.alarms, 600), wx: { place: cap(w.place, 10), temp: cap(w.temp, 4), cond: cap(w.cond, 10) },
-      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, unsend: o.unsend !== false, chatBg: num(o.chatBg, 0, 3, 0), nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
+      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, unsend: o.unsend !== false, chatBg: num(o.chatBg, -1, 3, 0), chatColor: /^#[0-9a-fA-F]{6}$/.test(o.chatColor) ? o.chatColor : '', nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
       frame: ['black', 'silver', 'blue', 'none'].indexOf(o.frame) >= 0 ? o.frame : 'black', cut: ['island', 'notch', 'none'].indexOf(o.cut) >= 0 ? o.cut : 'island'
     });
   }
@@ -739,7 +756,7 @@ body { margin: 0; }
     clearTimeout(saveT);
     saveT = setTimeout(function () {
       try {
-        var c = clone(Object.assign({}, S, { wallSrc: null, apps: (S.apps || []).map(function (a) { return { label: a.label, badge: a.badge }; }), call: S.call ? Object.assign({}, S.call, { icon: null }) : undefined, photos: S.photos.map(function (p) { return p.src ? Object.assign({}, p, { src: null }) : p; }), messages: S.messages.map(function (m) { var c2 = Object.assign({}, m); delete c2.icon; return c2; }) }));
+        var c = clone(Object.assign({}, S, { wallSrc: null, chatImg: null, apps: (S.apps || []).map(function (a) { return { label: a.label, badge: a.badge }; }), call: S.call ? Object.assign({}, S.call, { icon: null }) : undefined, photos: S.photos.map(function (p) { return p.src ? Object.assign({}, p, { src: null }) : p; }), messages: S.messages.map(function (m) { var c2 = Object.assign({}, m); delete c2.icon; return c2; }) }));
         localStorage.setItem(KEY, JSON.stringify(c));
       } catch (e) {}
       try { imgWrite(); } catch (e) {}
@@ -748,7 +765,7 @@ body { margin: 0; }
   /* 画像の保存（ブラウザ内のIndexedDB。容量がlocalStorageよりずっと大きい） */
   var IDB = null, imgReady = false;
   function imgSnap() {
-    return { wall: S.wallSrc || null, photos: S.photos.map(function (p) { return p.src || null; }), msg: S.messages.map(function (m) { return m.icon || null; }),
+    return { wall: S.wallSrc || null, chat: S.chatImg || null, photos: S.photos.map(function (p) { return p.src || null; }), msg: S.messages.map(function (m) { return m.icon || null; }),
       apps: (S.apps || []).map(function (a) { return a.icon || null; }), call: (S.call && S.call.icon) || null };
   }
   function imgWrite() {
@@ -759,6 +776,7 @@ body { margin: 0; }
     var ok = function (a, n) { return a && a.length === n; };
     if (rec) {
       if (typeof rec.wall === 'string' && /^data:image\//.test(rec.wall)) S.wallSrc = rec.wall;
+      if (typeof rec.chat === 'string' && /^data:image\//.test(rec.chat)) S.chatImg = rec.chat;
       var good = function (v) { return typeof v === 'string' && /^data:image\//.test(v); };
       if (ok(rec.photos, S.photos.length)) S.photos.forEach(function (p, i) { if (good(rec.photos[i])) p.src = rec.photos[i]; });
       if (ok(rec.msg, S.messages.length)) S.messages.forEach(function (m, i) { if (good(rec.msg[i])) m.icon = rec.msg[i]; });
@@ -837,7 +855,7 @@ body { margin: 0; }
   }
 
   /* ---------- 画像の読み込み ---------- */
-  function readImg(file, max) {
+  function readImg(file, max, keepAlpha) {
     return new Promise(function (res) {
       var r = new FileReader();
       r.onload = function () {
@@ -847,7 +865,8 @@ body { margin: 0; }
           var c = document.createElement('canvas');
           c.width = Math.max(1, Math.round(im.width * k)); c.height = Math.max(1, Math.round(im.height * k));
           c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
-          res(c.toDataURL('image/jpeg', 0.82));
+          var alpha = keepAlpha && /^image\/(png|webp|gif|avif|svg)/.test(file.type || '');
+          res(alpha ? c.toDataURL('image/png') : c.toDataURL('image/jpeg', 0.82));
         };
         im.onerror = function () { res(null); };
         im.src = r.result;
@@ -897,7 +916,7 @@ body { margin: 0; }
         '<button class="btn" type="button" data-tpl="horror">深夜ホラー</button>' +
         '<button class="btn" type="button" data-tpl="love">こじらせ片思い</button>' +
         '<button class="btn line" type="button" data-tpl="blank">まっさら</button></div></div>' +
-        fld('owner', 'キャラの名前', inp('owner', 'maxlength="20" placeholder="例：ミナト"')) +
+        fld('owner', '持ち主の名前', inp('owner', 'maxlength="20" placeholder="例：ミナト"')) +
         '<div class="two">' + fld('time', '時刻', inp('time', 'maxlength="6" inputmode="numeric"')) + fld('date', '日付', inp('date', 'maxlength="14"')) + '</div>' +
         '<div class="f"><label for="f-battery"><span>電池残量</span><span id="bv">' + S.battery + '%</span></label><input type="range" id="f-battery" data-b="battery" data-num="1" min="1" max="100" value="' + S.battery + '"></div>' +
         '<div class="f"><span class="lab">壁紙（ロック画面とホーム画面で共通）</span><div class="swr">' + WALLS.map(function (w, i) { return '<button type="button" class="sw" data-wall="' + i + '" aria-label="' + w[0] + '" aria-pressed="' + (!S.wallSrc && S.wallCss === w[1]) + '" style="background:' + w[1] + '"></button>'; }).join('') + '</div><div class="two"><label class="file"><input type="file" id="f-wall" accept="image/*">' + (S.wallSrc ? '別の画像に変える' : '自分の画像を選ぶ') + '</label>' + (S.wallSrc ? '<button class="btn line" type="button" data-wallreset="1">画像を外す</button>' : '<span></span>') + '</div></div>' +
@@ -936,8 +955,10 @@ body { margin: 0; }
           fld('messages.' + i + '.text', 'やりとり（1行が1つの吹き出し）', ta('messages.' + i + '.text', 7) + insbar('f-messages-' + i + '-text', 'gt')) +
           '<button class="btn line" type="button" data-del="messages.' + i + '">このやりとりを消す</button></div>';
       }).join('');
-      return '<div class="f"><span class="lab">会話の背景</span><div class="swr">' + CHATBG.map(function (c, i) { return '<button type="button" class="sw" data-chatbg="' + i + '" aria-label="' + c[0] + '" aria-pressed="' + ((S.chatBg || 0) === i) + '" style="background:' + c[1] + '"></button>'; }).join('') + '</div></div>' + h + (S.messages.length < 6 ? '<button class="btn" type="button" data-add="messages">やりとりを足す</button>' : '') +
-        '<p class="hint">行の先頭に「＞」を付けると、キャラが送った吹き出し（右側）になります。付けない行は相手からの吹き出しです。行を「取消」だけにすると、送信取り消しの表示になります。</p>';
+      return '<div class="f"><span class="lab">会話の背景</span><div class="swr">' + CHATBG.map(function (c, i) { return '<button type="button" class="sw" data-chatbg="' + i + '" aria-label="' + c[0] + '" aria-pressed="' + (!S.chatImg && (S.chatBg || 0) === i) + '" style="background:' + c[1] + '"></button>'; }).join('') +
+        '<label class="sw cpick" aria-label="好きな色" aria-pressed="' + (!S.chatImg && S.chatBg === -1) + '" style="background:' + (S.chatColor || '#ffffff') + '"><input type="color" id="f-chatcolor" data-b="chatColor" value="' + (S.chatColor || '#ffffff') + '"></label></div>' +
+        '<div class="two" style="margin-top:10px"><label class="file"><input type="file" id="f-chatimg" accept="image/*">背景に画像を使う</label>' + (S.chatImg ? '<button class="btn line" type="button" data-chatimgrm="1">画像を外す</button>' : '') + '</div></div>' + h + (S.messages.length < 6 ? '<button class="btn" type="button" data-add="messages">やりとりを足す</button>' : '') +
+        '<p class="hint">行の先頭に「＞」を付けると、持ち主が送った吹き出し（右側）になります。付けない行は相手からの吹き出しです。行を「取消」だけにすると、送信取り消しの表示になります。</p>';
     },
     share: function () {
       return '<div class="notice"><b>共有コードについて（必ずお読みください）</b><ul>' +
@@ -992,16 +1013,22 @@ body { margin: 0; }
         '<p class="hint">家計簿やショッピングなど、好きなアプリをホーム画面に並べられます。押すと少し縮むだけで、何も開きません。画像は正方形に近いものがきれいに収まります。画像なしのときは、名前の1文字目が入った色つきの四角になります。アップした画像はこのブラウザに保存され、開き直しても残ります。</p>';
     },
     photo: function () {
-      var h = S.photos.map(function (p, i) {
+      var card = function (p, i, n) {
         var th = p.src ? '<img src="' + p.src + '" alt="">' : '';
-        return '<div class="pc"><div class="th" style="' + (p.src ? '' : 'background:' + p.bg) + '">' + th + '</div>' +
-          '<input type="text" id="' + idOf('photos.' + i + '.date') + '" data-b="photos.' + i + '.date" value="' + esc(p.date) + '" maxlength="14" aria-label="撮影日">' +
-          '<label class="chk"><input type="checkbox" id="' + idOf('photos.' + i + '.del') + '" data-b="photos.' + i + '.del"' + (p.del ? ' checked' : '') + '>最近削除した項目に入れる</label>' +
-          '<button class="btn line" type="button" data-del="photos.' + i + '">外す</button></div>';
-      }).join('');
-      return '<div class="two"><label class="file"><input type="file" id="f-photos" accept="image/*" multiple>写真を選ぶ</label><button class="btn" type="button" data-sample="1">ぼんやりした写真を足す</button></div>' +
-        (h ? '<div class="pgd">' + h + '</div>' : '<p class="hint">写真はまだありません。</p>') +
-        '<p class="hint">自分の画像をアップすると写真アプリに並びます。「最近削除した項目」に入れた写真は、削除済みの一覧にだけ出ます。</p>';
+        return '<div class="pc"><div class="pth" style="' + (p.src ? '' : 'background:' + p.bg) + '">' + th + '<span class="pno">' + n + '</span></div>' +
+          '<input type="text" id="' + idOf('photos.' + i + '.date') + '" data-b="photos.' + i + '.date" value="' + esc(p.date) + '" maxlength="14" aria-label="撮影日（' + n + '枚目）" placeholder="撮影日">' +
+          '<div class="prow"><button class="btn line" type="button" data-pmove="' + i + '">' + (p.del ? '↑戻す' : '↓削除へ') + '</button><button class="btn line" type="button" data-del="photos.' + i + '">外す</button></div></div>';
+      };
+      var all = '', del = '', na = 0, nd = 0;
+      S.photos.forEach(function (p, i) { if (p.del) { nd++; del += card(p, i, nd); } else { na++; all += card(p, i, na); } });
+      var sec = function (title, sub, fileId, sample, cards, empty) {
+        return '<div class="psec"><b>' + title + '</b><span>' + sub + '</span></div>' +
+          '<div class="padd"><label class="file"><input type="file" id="' + fileId + '" accept="image/*" multiple>写真を選ぶ</label><button class="btn" type="button" data-sample="' + sample + '">見本を足す</button></div>' +
+          (cards ? '<div class="pgd">' + cards + '</div>' : '<div class="pempty">' + empty + '</div>');
+      };
+      return sec('すべて（' + na + '枚）', '写真アプリの「すべて」に出ます', 'f-photos', 'all', all, 'まだありません。') +
+        sec('最近削除した項目（' + nd + '枚）', '削除済みの一覧にだけ出ます', 'f-photos-del', 'del', del, 'まだありません。') +
+        '<p class="hint">丸い番号は、それぞれの一覧での何枚目かです。この順に、スマホの写真アプリの左上から並びます。「見本を足す」は、自分の画像がないときに入れる、暗い色のぼんやりしたぼかし画像です。何が写っているかは分からない、ピンぼけ風の写真として、写真アプリに並びます。「↓削除へ」「↑戻す」で、2つの一覧の間を移せます。</p>';
     }
   };
   function renderTabs() {
@@ -1020,6 +1047,7 @@ body { margin: 0; }
     if (!b) return;
     var v = t.type === 'checkbox' ? t.checked : t.value;
     if (t.dataset.num) v = +v;
+    if (b === 'chatColor') { S.chatBg = -1; S.chatImg = null; var cp = t.closest('.cpick'); if (cp) cp.style.background = v; document.querySelectorAll('#panes [data-chatbg]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); if (cp) cp.setAttribute('aria-pressed', 'true'); }
     setPath(S, b, v);
     if (t.type === 'range') { var o = $('bv'); if (o) o.textContent = v + '%'; var o2 = $('csv'); if (o2 && b === 'call.sec') o2.textContent = v + '秒'; }
     if (b === 'notifs' || b === 'unsend') cnt();
@@ -1028,7 +1056,7 @@ body { margin: 0; }
   panes.addEventListener('pointerdown', function (e) { if (e.target.closest('[data-ins]')) e.preventDefault(); });
   panes.addEventListener('click', function (e) {
     var t = e.target.closest('button'); if (!t) return;
-    if (t.dataset.tpl) { var snd = S.sound, uns = S.unsend, cbg = S.chatBg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut, sbg = S.stageBg; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.stageBg = sbg; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.sound = snd; S.unsend = uns; S.chatBg = cbg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
+    if (t.dataset.tpl) { var snd = S.sound, uns = S.unsend, cbg = S.chatBg, ccol = S.chatColor, cimg = S.chatImg, apps = S.apps, deco = S.deco, nfs = S.nfStyle, cl = S.call, cal = S.cal, wx = S.wx, alm = S.alarms, fol = S.folder, frm = S.frame, cut0 = S.cut, sbg = S.stageBg; S = TPL[t.dataset.tpl](); S.alarms = alm; S.folder = fol; S.frame = frm; S.cut = cut0; S.stageBg = sbg; S.nfStyle = nfs; S.call = cl; S.cal = cal; S.wx = wx; S.sound = snd; S.unsend = uns; S.chatBg = cbg; S.chatColor = ccol; S.chatImg = cimg; S.apps = apps || []; S.deco = deco; cnt(); renderPane(); save(); }
     else if (t.dataset.calliconrm) { if (S.call) delete S.call.icon; renderPane(); }
     else if (t.dataset.addapp) {
       S.apps = S.apps || []; if (S.apps.length < 12) S.apps.push({ label: '', badge: '' }); renderPane(); save();
@@ -1043,8 +1071,9 @@ body { margin: 0; }
       var ks = t.dataset.del.split('.'); S[ks[0]].splice(+ks[1], 1); renderPane(); save();
     }
     else if (t.dataset.sample) {
-      S.photos.push({ bg: ph(S.photos.length, S.mood), date: '10月19日', del: false }); renderPane(); save();
+      S.photos.push({ bg: ph(S.photos.length, S.mood), date: '10月19日', del: t.dataset.sample === 'del' }); renderPane(); save();
     }
+    else if (t.dataset.pmove) { var pm = S.photos[+t.dataset.pmove]; if (pm) { pm.del = !pm.del; renderPane(); } }
     else if (t.dataset.wallreset) { S.wallSrc = null; renderPane(); }
     else if (t.dataset.wall) { var w = WALLS[+t.dataset.wall]; S.wallCss = w[1]; S.wallSrc = null; renderPane(); save(); }
     else if (t.dataset.ins) { insertAt(t.dataset.for, t.dataset.ins); }
@@ -1058,26 +1087,28 @@ body { margin: 0; }
     else if (t.dataset.sbg) { S.stageBg = t.dataset.sbg; renderPane(); }
     else if (t.dataset.cut) { S.cut = t.dataset.cut; applyFrame(); renderPane(); }
     else if (t.dataset.nf) { S.nfStyle = t.dataset.nf; renderPane(); save(); }
-    else if (t.dataset.chatbg) { S.chatBg = +t.dataset.chatbg; renderPane(); save(); }
+    else if (t.dataset.chatbg) { S.chatBg = +t.dataset.chatbg; S.chatImg = null; renderPane(); save(); }
+    else if (t.dataset.chatimgrm) { S.chatImg = null; renderPane(); }
     else if (t.dataset.iconrm) { delete S.messages[+t.dataset.iconrm].icon; renderPane(); }
   });
   panes.addEventListener('change', function (e) {
     var t = e.target;
     if (t.id === 'f-snd-n' || t.id === 'f-snd-r') { loadSnd(t.id === 'f-snd-n' ? 'n' : 'r', t.files[0]); t.value = ''; return; }
+    if (t.id === 'f-chatimg' && t.files[0]) { readImg(t.files[0], 900).then(function (d) { if (d) { S.chatImg = d; renderPane(); } }); return; }
     if (t.id === 'f-wall' && t.files[0]) {
       readImg(t.files[0], 900).then(function (d) { if (d) { S.wallSrc = d; renderPane(); } });
     } else if (t.id === 'f-call-icon' && t.files[0]) {
-      readImg(t.files[0], 320).then(function (d) { if (d) { S.call = callOf(); S.call.icon = d; renderPane(); } });
+      readImg(t.files[0], 320, true).then(function (d) { if (d) { S.call = callOf(); S.call.icon = d; renderPane(); } });
     } else if (t.dataset.appicon !== undefined && t.files[0]) {
       var ax = +t.dataset.appicon;
-      readImg(t.files[0], 240).then(function (d) { if (d && S.apps && S.apps[ax]) { S.apps[ax].icon = d; renderPane(); } });
+      readImg(t.files[0], 240, true).then(function (d) { if (d && S.apps && S.apps[ax]) { S.apps[ax].icon = d; renderPane(); } });
     } else if (t.dataset.icon !== undefined && t.files[0]) {
       var ix = +t.dataset.icon;
-      readImg(t.files[0], 240).then(function (d) { if (d && S.messages[ix]) { S.messages[ix].icon = d; renderPane(); } });
-    } else if (t.id === 'f-photos' && t.files.length) {
-      var fs = Array.prototype.slice.call(t.files, 0, 24);
+      readImg(t.files[0], 240, true).then(function (d) { if (d && S.messages[ix]) { S.messages[ix].icon = d; renderPane(); } });
+    } else if ((t.id === 'f-photos' || t.id === 'f-photos-del') && t.files.length) {
+      var fs = Array.prototype.slice.call(t.files, 0, 24), toDel = t.id === 'f-photos-del';
       Promise.all(fs.map(function (f) { return readImg(f, 720); })).then(function (ds) {
-        ds.forEach(function (d) { if (d) S.photos.push({ src: d, up: true, date: '10月19日', del: false }); });
+        ds.forEach(function (d) { if (d) S.photos.push({ src: d, up: true, date: '10月19日', del: toDel }); });
         renderPane();
       });
     }
@@ -1157,7 +1188,7 @@ body { margin: 0; }
     var ns = notifs();
     $('nlist').className = 'nlist' + (S.nfStyle === 'dark' ? '' : ' nlight');
     $('nlist').innerHTML = ns.map(function (n, i) {
-      return '<div class="nf" data-n="' + esc(n.name) + '" style="animation-delay:' + (0.8 + i * 1.5) + 's"><span class="ni">' + (icoOf(n.name) ? '<img src="' + icoOf(n.name) + '" alt="">' : svg('msg')) + '</span><span class="nbd"><span class="nh"><span>' + esc(n.name) + '</span><em>' + esc(n.time) + '</em></span><span class="np">' + esc(n.body) + '</span></span></div>';
+      return '<div class="nf" data-n="' + esc(n.name) + '" style="animation-delay:' + (0.8 + i * 1.5) + 's"><span class="ni' + (icoOf(n.name) ? ' im' : '') + '">' + (icoOf(n.name) ? '<img src="' + icoOf(n.name) + '" alt="">' : svg('msg')) + '</span><span class="nbd"><span class="nh"><span>' + esc(n.name) + '</span><em>' + esc(n.time) + '</em></span><span class="np">' + esc(n.body) + '</span></span></div>';
     }).join('');
     var real = [
       { id: 'msg', k: 'msg', l: 'メッセージ', bg: '#34c759', badge: ns.length || '' },
@@ -1211,6 +1242,7 @@ body { margin: 0; }
     }).join('');
     show('<div class="view'+'">' + HOMEBAR + '<div class="scroll n"><h2 class="lt">メッセージ</h2>' + (rows || '<div class="empty">メッセージはありません</div>') + '</div></div>', true);
   }
+  function lumDark(hex) { var m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex || ''); if (!m) return 0; return (0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)) < 110 ? 1 : 0; }
   var CHATBG = [['青灰', '#869bbf', 0], ['生成り', '#efe9dc', 0], ['桜', '#f4d6e0', 0], ['夜', '#15171d', 1]];
   function minusMin(t, d) {
     var m = String(t || '').match(/^(\d{1,2}):(\d{2})$/); if (!m) return '';
@@ -1220,7 +1252,8 @@ body { margin: 0; }
   var SV = function (p) { return '<svg viewBox="0 0 24 24">' + p + '</svg>'; };
   function vThread(i) {
     var m = S.messages[i]; if (!m) return vMsgList();
-    var cb = CHATBG[S.chatBg || 0] || CHATBG[0], dark = cb[2];
+    var cb = S.chatBg === -1 ? ['好きな色', S.chatColor || '#ffffff', lumDark(S.chatColor || '#ffffff')] : (CHATBG[S.chatBg || 0] || CHATBG[0]), dark = cb[2];
+    if (S.chatImg) { cb = [cb[0], 'url(\'' + S.chatImg + '\') center/cover no-repeat', 0]; dark = 0; }
     var th = thread(m.text), n = th.length, lastOut = -1, k;
     th.forEach(function (x, j) { if (x.me && !x.cancel) lastOut = j; });
     var d = 0, tm = [];
