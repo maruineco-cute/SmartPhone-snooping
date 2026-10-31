@@ -665,7 +665,7 @@ body { margin: 0; }
       messages: (S.messages || []).map(function (m) { return { name: m.name, time: m.time, text: m.text }; }),
       photos: (S.photos || []).map(function (p) { return { date: p.date, del: !!p.del }; }),
       apps: (S.apps || []).map(function (a) { return { label: a.label, badge: a.badge }; }),
-      call: c, cal: S.cal || '', alarms: S.alarms || '', wx: wxOf(), folder: S.folder !== false, deco: S.deco !== false, sound: S.sound !== false, ring: S.ring !== false, unsend: S.unsend !== false,
+      call: c, cal: S.cal || '', alarms: S.alarms || '', wx: wxOf(), folder: S.folder !== false, deco: S.deco !== false, sound: S.sound !== false, ring: S.ring === true, unsend: S.unsend !== false,
       chatBg: S.chatBg === -1 ? -1 : (S.chatBg || 0), chatColor: S.chatColor || '', nfStyle: S.nfStyle === 'dark' ? 'dark' : 'light',
       frame: S.frame || 'black', cut: S.cut || 'island'
     };
@@ -715,7 +715,7 @@ body { margin: 0; }
       apps: arr(o.apps, 12).map(function (a) { a = a || {}; return { label: cap(a.label, 8), badge: cap(a.badge, 3) }; }),
       call: { on: c.on === true, sec: num(c.sec, 1, 60, 5), name: cap(c.name, 14), iconOn: c.iconOn === true, label: cap(c.label, 16), calls: cap(c.calls, 2000), vib: c.vib !== false },
       cal: cap(o.cal, 2000), alarms: cap(o.alarms, 600), wx: { place: cap(w.place, 10), temp: cap(w.temp, 4), cond: cap(w.cond, 10) },
-      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, ring: o.ring !== false, unsend: o.unsend !== false, chatBg: num(o.chatBg, -1, 3, 0), chatColor: /^#[0-9a-fA-F]{6}$/.test(o.chatColor) ? o.chatColor : '', nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
+      deco: o.deco !== false, folder: o.folder !== false, sound: o.sound !== false, ring: o.ring === true, unsend: o.unsend !== false, chatBg: num(o.chatBg, -1, 3, 0), chatColor: /^#[0-9a-fA-F]{6}$/.test(o.chatColor) ? o.chatColor : '', nfStyle: o.nfStyle === 'dark' ? 'dark' : 'light',
       frame: ['black', 'silver', 'blue', 'none'].indexOf(o.frame) >= 0 ? o.frame : 'black', cut: ['island', 'notch', 'none'].indexOf(o.cut) >= 0 ? o.cut : 'island'
     });
   }
@@ -754,6 +754,7 @@ body { margin: 0; }
     if (raw) S = Object.assign(TPL.blank(), JSON.parse(raw));
   } catch (e) { S = null; }
   if (!S) S = TPL.horror();
+  if (S.owner === 'ミナト' || S.owner === 'ハルカ') S.owner = 'ナマエ';
   try { if (!localStorage.getItem('peekphone.m1')) { if (S.call) S.call.on = true; localStorage.setItem('peekphone.m1', '1'); } } catch (e) {}
   var saveT = null;
   function save() {
@@ -930,7 +931,7 @@ body { margin: 0; }
         '<div class="f"><span class="lab">カメラ部分</span><div class="chipr">' + [['island', 'アイランド'], ['notch', 'ノッチ'], ['none', 'なし']].map(function (x) { return '<button type="button" class="btn" data-cut="' + x[0] + '" aria-pressed="' + ((S.cut || 'island') === x[0]) + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
         '<div class="f"><span class="lab">ロック画面の通知の色</span><div class="chipr"><button type="button" class="btn" data-nf="light" aria-pressed="' + (S.nfStyle !== 'dark') + '">白</button><button type="button" class="btn" data-nf="dark" aria-pressed="' + (S.nfStyle === 'dark') + '">黒</button></div></div>' +
         '<label class="chk" for="f-sound"><input type="checkbox" id="f-sound" data-b="sound"' + (S.sound !== false ? ' checked' : '') + '>通知の音を鳴らす（ロック画面の通知）</label>' +
-        '<label class="chk" for="f-ring"><input type="checkbox" id="f-ring" data-b="ring"' + (S.ring !== false ? ' checked' : '') + '>着信音を鳴らす（下で着信音を選んだときだけ鳴ります）</label>' +
+        '<label class="chk" for="f-ring"><input type="checkbox" id="f-ring" data-b="ring"' + (S.ring === true ? ' checked' : '') + '>着信音を鳴らす（下で着信音のファイルを選んだときだけ鳴ります）</label>' +
         '<div class="f"><span class="lab">通知の音</span><div class="icorow"><label class="file"><input type="file" id="f-snd-n" accept="audio/*">' + (USND.n ? '別の音を選ぶ' : '自分の音を選ぶ') + '</label><button class="btn line" type="button" data-snd="tn">聴いてみる</button>' + (USND.n ? '<button class="btn line" type="button" data-snd="rn">もとの音に戻す</button>' : '') + '</div><p class="hint">' + (USND.n ? '自分の音を使っています。' : 'いまは標準の音（通知風のポン）です。') + '</p></div>' +
         '<div class="f"><span class="lab">着信音（着信画面が出ている間、くり返し鳴ります）</span><div class="icorow"><label class="file"><input type="file" id="f-snd-r" accept="audio/*">' + (USND.r ? '別の音を選ぶ' : '着信音を選ぶ') + '</label>' + (USND.r ? '<button class="btn line" type="button" data-snd="tr">聴いてみる</button><button class="btn line" type="button" data-snd="rr">外す</button>' : '') + '</div><p class="hint">' + (USND.r ? '自分の着信音を使っています。' : '設定しなければ、着信音は鳴りません。') + '</p></div>' +
         '<p class="hint" id="sndmsg" role="status">音のファイルは、短いもの（約650KBまで）が使えます。端末の中にだけ保存され、送信されません。共有コードには入りません。</p>' +
@@ -1602,7 +1603,7 @@ body { margin: 0; }
 
   function unlock() {
     if (!locked) return;
-    locked = false; clearNT(); screen.classList.remove('locked'); scheduleCall();
+    locked = false; clearNT(); stopPing(); screen.classList.remove('locked'); scheduleCall();
     lock.style.transform = 'translateY(-105%)'; lock.style.opacity = '0';
   }
   function openByName(name) {
@@ -1661,12 +1662,13 @@ body { margin: 0; }
       } else { ringEl = null; ringSrc = ''; }
     } catch (e) {}
   }
+  function stopPing() { clearPT(); try { if (sndEl) { sndEl.pause(); sndEl.currentTime = 0; } } catch (e) {} }
   function ping() {
-    if (!sndEl) return;
+    if (!sndEl || !locked || screen.classList.contains('incall')) return;
     try { sndEl.muted = false; sndEl.currentTime = 0; var p = sndEl.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
   function ringStart() {
-    if (!ringEl || S.ring === false) return;
+    if (!ringEl || S.ring !== true) return;
     try { ringEl.muted = false; ringEl.currentTime = 0; var p = ringEl.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
   }
   function ringStop() { try { if (ringEl) { ringEl.pause(); ringEl.currentTime = 0; } } catch (e) {} }
@@ -1686,7 +1688,7 @@ body { margin: 0; }
     fr.onload = function () {
       var d = String(fr.result || '');
       if (!/^data:audio\//.test(d)) { sndMsg('この形式は読み込めませんでした。'); return; }
-      USND[k] = d;
+      USND[k] = d; if (k === 'r') { S.ring = true; save(); }
       var ok = saveSnd();
       renderPane();
       sndMsg(ok ? '設定しました。次に開いたときも使われます。' : '設定しました。ただ、このブラウザには保存できず、開き直すと元に戻ります。');
@@ -1733,7 +1735,7 @@ body { margin: 0; }
       '<div class="cbtns"><button type="button" class="cbt" data-call="decline"><span class="cb red">' + PHONE + '</span>拒否</button>' +
       '<button type="button" class="cbt" data-call="accept"><span class="cb grn">' + PHONE + '</span>応答</button></div>';
     el.hidden = false;
-    clearPT(); clearInterval(callBz); callBz = null; if (c.vib !== false) { buzz(); callBz = setInterval(buzz, 1500); } ringStart();
+    stopPing(); clearInterval(callBz); callBz = null; if (c.vib !== false) { buzz(); callBz = setInterval(buzz, 1500); } ringStart();
   }
   var callT0 = 0;
   function callDur() { var s = Math.floor((Date.now() - callT0) / 1000); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + (s % 60)).slice(-2); }
